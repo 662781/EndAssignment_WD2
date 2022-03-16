@@ -27,5 +27,8 @@ $router->post('/categories', 'CategoryController@create');
 $router->put('/categories/(\d+)', 'CategoryController@update');
 $router->delete('/categories/(\d+)', 'CategoryController@delete');
 
+// router for the login endpoint
+$router->post('/users/login', 'UserController@login');
+
 // Run it!
 $router->run();

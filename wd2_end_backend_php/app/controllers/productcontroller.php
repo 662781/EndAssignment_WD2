@@ -4,6 +4,8 @@ namespace Controllers;
 
 use Exception;
 use Services\ProductService;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class ProductController extends Controller
 {
@@ -17,6 +19,11 @@ class ProductController extends Controller
 
     public function getAll()
     {
+        $jwt = $this->checkToken();
+        if(!$jwt){
+            return;
+        }
+
         $offset = NULL;
         $limit = NULL;
 

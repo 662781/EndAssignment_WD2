@@ -23,7 +23,7 @@
 
 <script>
 import ProductListItem from "./ProductListItem.vue";
-import axios from "axios";
+import axios from "../../axios-auth";
 
 export default {
   name: "ProductList",
@@ -41,7 +41,7 @@ export default {
   methods: {
     loadProducts() {
       axios
-        .get("http://localhost/products")
+        .get("/products")
         .then((res) => {
           console.log(res);
           this.products = res.data;

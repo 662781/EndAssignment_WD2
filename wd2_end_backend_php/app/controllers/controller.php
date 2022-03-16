@@ -2,6 +2,10 @@
 
 namespace Controllers;
 
+use Exception;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 class Controller
 {
 
@@ -36,5 +40,30 @@ class Controller
             $object->{$key} = $value;
         }
         return $object;
+    }
+
+    function checkToken(){
+        if(!isset($_SERVER["HTTP_AUTHORIZATION"])){
+            $this->respondWithError(401, "Je hebt geen Token pik");
+            return false;
+        }
+
+        try{
+            $header = $_SERVER["HTTP_AUTHORIZATION"];
+            $array = explode(" ", $header);
+            $jwt = $array[1];   
+    
+            $key = "MustBeSecret";
+    
+            $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+            return $decoded;
+        }
+        catch (Exception $e) {
+            $this->respondWithError(401, $e->getMessage());
+            return;
+        }
+       
+
+
     }
 }

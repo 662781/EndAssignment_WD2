@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../../axios-auth";
 
 export default {
   name: "CreateProduct",
@@ -76,7 +76,7 @@ export default {
   },
   methods:{
     addProduct() {
-      axios.post("http://localhost/products", this.product)
+      axios.post("/products", this.product)
       .then(res => {
         console.log(res.data);
         this.$router.push('/products')
@@ -86,7 +86,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost/categories")
+      .get("/categories")
       .then((res) => {
         console.log(res);
         this.categories = res.data;
