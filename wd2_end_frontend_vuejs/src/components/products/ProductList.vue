@@ -3,6 +3,7 @@
     <div class="container">
       <h2 class="mt-3 mt-lg-5">Products</h2>
       <button
+        v-if="this.$store.getters.isAuthenticated"
         type="button"
         class="btn btn-primary mt-3"
         @click="this.$router.push('/createproduct')"

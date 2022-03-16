@@ -1,55 +1,137 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap");
-
-body {
-  font-family: "Quicksand", sans-serif;
+*{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-h1,
-h2 {
-  font-weight: 700;
+
+
+/* Login */
+
+
+.logo-login{
+  max-width: 85%;
 }
 
-/* Product cards */
-
-.product-card {
-  box-shadow: 1px 1px 4px 0 rgb(30 30 30 / 16%);
+.logo-figure figcaption{
+  font-size: 60px;
+  font-weight: bold;
+  color: goldenrod;
 }
 
-.product-card img {
-  margin: auto;
-  display: block;
-  max-width: 115px;
-  max-height: 100px;
-  margin-bottom: 10px;
+.login-form{
+  margin-left: 450px;
+  margin-right: 450px;
 }
 
-@media screen and (max-width: 768px) {
-  .product-card img {
-    display: block;
-    width: 85px;
-    margin-right: 10px;
-    margin-bottom: 0px;
-    height: auto;
-    float: left;
-  }
+.error_msg{
+  color: red;
 }
 
-.price {
-  font-size: 1.5rem;
-  font-weight: 700;
+
+
+/* Main */
+
+.logo{
+  max-width: 50%;
 }
 
-.product-card p {
-  margin: 0;
-  font-size: 0.9rem;
-}
-.product-card small {
-  color: #b3b3b3;
-  font-size: 0.8rem;
+.container-fluid{
+  background-color: rgb(111, 139, 61);
 }
 
-/* Social icons */
+.nav-item .nav-link:hover{
+  color: white;
+  background-color: rgb(250, 104, 78);
+  font-weight: bold;
+}
 
-.fa-brands:hover {
-  color: #929292;
+.nav-item.active{
+  background-color: goldenrod;
+  font-weight: bold;
+}
+
+/* .col{
+  /* border: 5px solid red;
+} */
+
+.card .card-body img{
+  width: 75%;
+}
+
+@media all and (min-width: 992px) {
+.navbar .nav-item .dropdown-menu{ display: none; }
+.navbar .nav-item:hover .dropdown-menu{ display: block; }
+.navbar .nav-item .dropdown-menu{ margin-top:0; }
+}	
+
+.dropdown-menu .dropdown-item:hover{
+  background-color: rgb(250, 104, 78);
+  color: white;
+}
+
+.product-header{
+  font-weight: bold;
+  color: goldenrod;
+}
+
+.homecard a{
+  color: white;
+}
+
+.product-page-image{
+  max-width: 500px;
+}
+
+.product-type, #creator-header{
+  color: rgb(250, 104, 78);
+  font-weight: bolder;
+  font-size: 60px;
+}
+
+.carousel .carousel-item {
+  height: 300px;
+}
+
+.item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 300px;
+}
+
+#empty-pizza{
+  max-width: 500px;
+}
+
+.btn-creator a, .btn-creator a:hover{
+  color: white;
+}
+
+.logout-btn:hover{
+  color: white;
+  background-color: rgb(250, 104, 78);
+}
+
+.cart-item-img{
+  max-width: 35%;
+}
+
+.product-amount{
+  max-width: 25%;
+}
+
+.ingredients{
+  max-width: 70%;
+}
+
+.product-image{
+  max-width: 30%;
+  margin-right: 5%;
+}
+
+.error_msg{
+  color: red;
+}
+
+.conf_msg{
+  color: goldenrod;
 }
