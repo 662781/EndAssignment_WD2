@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import axios from '../axios-auth'
+
 const store = createStore({
     state() {
         return {

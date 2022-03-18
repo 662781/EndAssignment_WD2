@@ -8,6 +8,8 @@ import ProductList from './components/products/ProductList.vue';
 import CreateProduct from './components/products/CreateProduct.vue';
 import EditProduct from './components/products/EditProduct.vue';
 import Login from './components/Login.vue';
+import Register from './components/Register.vue';
+import Cart from './components/cart/Cart.vue';
 
 
 const routes = [
@@ -15,7 +17,9 @@ const routes = [
     { path: '/products', component: ProductList },
     { path: '/createproduct', component: CreateProduct },
     { path: '/editproduct/:id', component: EditProduct, props: true  },
-    { path: '/login', component: Login }
+    { path: '/login', component: Login },
+    { path: '/register', component: Register },
+    { path: '/cart', component: Cart }
 ];
 
 const router = createRouter({
