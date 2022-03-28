@@ -12,61 +12,82 @@ class ProductRepository extends Repository
 {
     function getAll($offset = NULL, $limit = NULL)
     {
+        // try {
+        //     $query = "SELECT `id`, `name`, `category_id`, `price`, `ingredients`, `img_path` FROM `product`";
+        //     if (isset($limit) && isset($offset)) {
+        //         $query .= " LIMIT :limit OFFSET :offset ";
+        //     }
+        //     $stmt = $this->connection->prepare($query);
+        //     if (isset($limit) && isset($offset)) {
+        //         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        //         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        //     }
+        //     $stmt->execute();
+
+        //     $products = $stmt->fetchAll();
+
+        //     return $products;
+        // } catch (PDOException $e) {
+        //     echo $e;
+        // }
+
         try {
-            $query = "SELECT product.*, category.name as category_name FROM product INNER JOIN category ON product.category_id = category.id";
-            if (isset($limit) && isset($offset)) {
-                $query .= " LIMIT :limit OFFSET :offset ";
-            }
-            $stmt = $this->connection->prepare($query);
-            if (isset($limit) && isset($offset)) {
-                $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-                $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-            }
+            $stmt = $this->connection->prepare("SELECT id, `name`, category_id, price, ingredients, img_path FROM product");
             $stmt->execute();
-
-            $products = array();
-            while (($row = $stmt->fetch(PDO::FETCH_ASSOC)) !== false) {               
-                $products[] = $this->rowToProduct($row);
-            }
-
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Product');
+            $products = $stmt->fetchAll();
             return $products;
-        } catch (PDOException $e) {
+        } catch (PDOException $e)
+        {
             echo $e;
         }
     }
 
-    function getOne($id)
-    {
+    // function getOne($id)
+    // {
+    //     try {
+    //         $query = "SELECT product.*, category.name as category_name FROM product INNER JOIN category ON product.category_id = category.id WHERE product.id = :id";
+    //         $stmt = $this->connection->prepare($query);
+    //         $stmt->bindParam(':id', $id);
+    //         $stmt->execute();
+
+    //         $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    //         $row = $stmt->fetch();
+    //         $product = $this->rowToProduct($row);
+
+    //         return $product;
+    //     } catch (PDOException $e) {
+    //         echo $e;
+    //     }
+    // }
+
+    // function rowToProduct($row) {
+    //     $product = new Product();
+    //     $product->id = $row['id'];
+    //     $product->name = $row['name'];
+    //     $product->price = $row['price'];
+    //     $product->description = $row['description'];
+    //     $product->image = $row['image'];
+    //     $product->category_id = $row['category_id'];
+    //     $category = new Category();
+    //     $category->id = $row['category_id'];
+    //     $category->name = $row['category_name'];
+
+    //     $product->category = $category;
+    //     return $product;
+    // }
+
+    function getOne($product_id){
         try {
-            $query = "SELECT product.*, category.name as category_name FROM product INNER JOIN category ON product.category_id = category.id WHERE product.id = :id";
-            $stmt = $this->connection->prepare($query);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $row = $stmt->fetch();
-            $product = $this->rowToProduct($row);
-
+            $stmt = $this->connection->prepare("SELECT id, `name`, category_id, price, ingredients, img_path FROM product WHERE id = ?");
+            $stmt->execute([$product_id]);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Product');
+            $product = $stmt->fetch();
             return $product;
-        } catch (PDOException $e) {
+        } catch (PDOException $e)
+        {
             echo $e;
         }
-    }
-
-    function rowToProduct($row) {
-        $product = new Product();
-        $product->id = $row['id'];
-        $product->name = $row['name'];
-        $product->price = $row['price'];
-        $product->description = $row['description'];
-        $product->image = $row['image'];
-        $product->category_id = $row['category_id'];
-        $category = new Category();
-        $category->id = $row['category_id'];
-        $category->name = $row['category_name'];
-
-        $product->category = $category;
-        return $product;
     }
 
     function insert($product)

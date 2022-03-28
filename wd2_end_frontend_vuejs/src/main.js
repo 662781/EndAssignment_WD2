@@ -10,6 +10,7 @@ import EditProduct from './components/products/EditProduct.vue';
 import Login from './components/Login.vue';
 import Register from './components/Register.vue';
 import Cart from './components/cart/Cart.vue';
+import Creator from './components/Creator.vue';
 
 
 const routes = [
@@ -19,7 +20,8 @@ const routes = [
     { path: '/editproduct/:id', component: EditProduct, props: true  },
     { path: '/login', component: Login },
     { path: '/register', component: Register },
-    { path: '/cart', component: Cart }
+    { path: '/cart', component: Cart },
+    { path: '/creator', component: Creator }
 ];
 
 const router = createRouter({

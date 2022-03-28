@@ -38,7 +38,10 @@
             >
             <ul class="dropdown-menu">
               <li>
-                <router-link class="dropdown-item" to="/creator"
+                <router-link
+                  class="dropdown-item"
+                  to="/creator"
+                  v-if="this.$store.getters.isAuthenticated"
                   >Start creating!</router-link
                 >
               </li>

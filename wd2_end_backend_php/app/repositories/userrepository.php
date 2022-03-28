@@ -11,21 +11,20 @@ class UserRepository extends Repository
     function checkUsernamePassword($username, $password)
     {
         try {
-            // retrieve the user with the given username
-            $stmt = $this->connection->prepare("SELECT id, username, email, `password`, created_at FROM user WHERE username = :username");
-            $stmt->bindParam(':username', $username);
-            $stmt->execute();
+            //Get the user with the given username from the DB
+            $stmt = $this->connection->prepare("SELECT id, username, email, `password`, created_at FROM user WHERE username = ?");
+            $stmt->execute([$username]);
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\User');
             $user = $stmt->fetch();
 
-            // verify if the password matches the hash in the database
+            //Verify the given password by comparing it to the hash in the DB
             $result = $this->verifyPassword($password, $user->password);
 
             if (!$result)
                 return false;
 
-            // do not pass the password hash to the caller
+            //Empty the password variable for the caller
             $user->password = "";
 
             return $user;
@@ -34,13 +33,13 @@ class UserRepository extends Repository
         }
     }
 
-    // hash the password (currently uses bcrypt)
+    //Hash the password with BCRYPT
     function hashPassword($password)
     {
         return password_hash($password, PASSWORD_DEFAULT);
     }
 
-    // verify the password hash
+    //Verify the password hash
     function verifyPassword($input, $hash)
     {
         return password_verify($input, $hash);

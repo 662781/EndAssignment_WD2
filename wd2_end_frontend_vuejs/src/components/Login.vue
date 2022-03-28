@@ -75,7 +75,7 @@ export default {
           password: this.password,
         })
         .then(() => {
-          this.$router.push("/products");
+          this.$router.push("/home");
         })
         .catch((error) => {
           this.errorMessage = error;

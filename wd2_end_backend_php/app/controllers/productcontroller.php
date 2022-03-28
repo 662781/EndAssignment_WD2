@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     private $service;
 
-    // initialize services
+    //Initialize services
     function __construct()
     {
         $this->service = new ProductService();
@@ -19,10 +19,10 @@ class ProductController extends Controller
 
     public function getAll()
     {
-        $jwt = $this->checkToken();
-        if(!$jwt){
-            return;
-        }
+        // $jwt = $this->checkToken();
+        // if(!$jwt){
+        //     return;
+        // }
 
         $offset = NULL;
         $limit = NULL;
@@ -43,7 +43,6 @@ class ProductController extends Controller
     {
         $product = $this->service->getOne($id);
 
-        // we might need some kind of error checking that returns a 404 if the product is not found in the DB
         if (!$product) {
             $this->respondWithError(404, "Product not found");
             return;

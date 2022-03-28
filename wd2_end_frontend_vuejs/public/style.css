@@ -1,11 +1,20 @@
+/* General */
+
 *{
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.error_msg{
+  color: red;
+}
+
+.conf_msg{
+  color: goldenrod;
 }
 
 
 
 /* Login */
-
 
 .logo-login{
   max-width: 85%;
@@ -22,13 +31,9 @@
   margin-right: 450px;
 }
 
-.error_msg{
-  color: red;
-}
 
 
-
-/* Main */
+/* Nav */
 
 .logo{
   max-width: 50%;
@@ -36,6 +41,7 @@
 
 .container-fluid{
   background-color: rgb(111, 139, 61);
+  margin-top: -10px;
 }
 
 .nav-item .nav-link:hover{
@@ -49,32 +55,45 @@
   font-weight: bold;
 }
 
-/* .col{
-  /* border: 5px solid red;
-} */
+@media all and (min-width: 992px) {
+  .navbar .nav-item .dropdown-menu{ display: none; }
+  .navbar .nav-item:hover .dropdown-menu{ display: block; }
+  .navbar .nav-item .dropdown-menu{ margin-top:0; }
+  }	
+
+  .dropdown-menu .dropdown-item:hover{
+    background-color: rgb(250, 104, 78);
+    color: white;
+  }
+
+  .logout-btn:hover{
+    color: white;
+    background-color: rgb(250, 104, 78);
+  }
+
+
+
+/* Home */
 
 .card .card-body img{
   width: 75%;
 }
 
-@media all and (min-width: 992px) {
-.navbar .nav-item .dropdown-menu{ display: none; }
-.navbar .nav-item:hover .dropdown-menu{ display: block; }
-.navbar .nav-item .dropdown-menu{ margin-top:0; }
-}	
-
-.dropdown-menu .dropdown-item:hover{
-  background-color: rgb(250, 104, 78);
+.homecard a{
   color: white;
 }
+
+.carousel .carousel-item {
+  height: 300px;
+}
+
+
+
+/* Products */
 
 .product-header{
   font-weight: bold;
   color: goldenrod;
-}
-
-.homecard a{
-  color: white;
 }
 
 .product-page-image{
@@ -87,16 +106,16 @@
   font-size: 60px;
 }
 
-.carousel .carousel-item {
-  height: 300px;
-}
-
 .item img {
     position: absolute;
     top: 0;
     left: 0;
     min-height: 300px;
 }
+
+
+
+/* Creator */
 
 #empty-pizza{
   max-width: 500px;
@@ -106,10 +125,9 @@
   color: white;
 }
 
-.logout-btn:hover{
-  color: white;
-  background-color: rgb(250, 104, 78);
-}
+
+
+/* Cart */
 
 .cart-item-img{
   max-width: 35%;
@@ -128,10 +146,3 @@
   margin-right: 5%;
 }
 
-.error_msg{
-  color: red;
-}
-
-.conf_msg{
-  color: goldenrod;
-}
