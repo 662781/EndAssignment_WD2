@@ -15,8 +15,8 @@
           v-for="product in pizzas"
           :key="product.id"
           :product="product"
-          @update="loadProducts"
         />
+        <!-- @update="loadProducts" -->
       </div>
       <h1 class="product-type">Pasta</h1>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -24,7 +24,6 @@
           v-for="product in pastas"
           :key="product.id"
           :product="product"
-          @update="loadProducts"
         />
       </div>
     </div>

@@ -84,10 +84,19 @@ export default {
         .catch((error) => console.log(error));
     },
     editProduct(id) {
-      //Use the router to navigate to the editproduct route and pass the id
+      //Use the router to navigate to the editproduct page and pass the id
       this.$router.push("/editproduct/" + id);
     },
-    addToCart() {},
+    addToCart() {
+      const item = this.product;
+      if (!localStorage.getItem("cart")) {
+        localStorage.setItem("cart", JSON.stringify([]));
+      }
+      const cartItems = JSON.parse(localStorage.getItem("cart"));
+      cartItems.push(item);
+      localStorage.setItem("cart", JSON.stringify(cartItems));
+      this.$router.push("/cart");
+    },
   },
 };
 </script>

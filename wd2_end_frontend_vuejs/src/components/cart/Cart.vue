@@ -9,24 +9,30 @@
           </h4>
           <ul class="list-group mb-3" id="cart">
             <!-- Show CartItems -->
-            <cart-item >
-
-            </cart-item>
+            <cart-item
+              v-for="item in cardItems"
+              :key="item.id"
+              :item="item"
+              @delete="removeFromCart()"
+            />
             <!-- Show if cart is empty -->
-            <li class="list-group-item d-flex justify-content-between lh-sm">
+            <li
+              class="list-group-item d-flex justify-content-between lh-sm"
+              v-if="!this.cartItems.length"
+            >
               <i> Your cart is empty </i>
             </li>
             <!-- Total Price -->
             <li class="list-group-item d-flex justify-content-between">
               <span>Total (EUR)</span>
-              <strong>€20</strong>
+              <strong>€{{ this.totalPrice }}</strong>
             </li>
           </ul>
-          <h4 class="conf_msg">Confirmation</h4>
+          <h4 class="conf_msg">{{ this.confirmMsg }}</h4>
         </div>
         <div class="col-md-7 col-lg-8">
           <h4 class="mb-3">Billing address</h4>
-          <h5 class="error_msg">Error Message</h5>
+          <h5 class="error_msg">{{ this.errorMsg }}</h5>
           <form
             class="needs-validation"
             novalidate=""
@@ -140,8 +146,7 @@
 
             <button
               class="w-100 btn btn-primary btn-lg"
-              type="submit"
-              name="pay"
+              type="button"
             >
               Commence Payment
             </button>
@@ -157,13 +162,38 @@ import CartItem from "./CartItem.vue";
 
 export default {
   name: "Cart",
-  data(){
-      return{
-          cartItems: []
-      }
+  data() {
+    return {
+      cartItems: [],
+      confirmMsg: "",
+      errorMsg: "",
+      totalPrice: 0,
+    };
   },
   components: {
     CartItem,
+  },
+  methods: {
+    loadCart() {
+      if (!localStorage.getItem("cart")) {
+        localStorage.setItem("cart", JSON.stringify([]));
+      }
+      this.cartItems = JSON.parse(localStorage.getItem("cart"));
+      if (this.cartItems != null) {
+        this.cartItems.forEach((item) => {
+          this.totalPrice += item.price;
+        });
+      }
+    },
+    removeFromCart(itemId) {
+      const cartItems = JSON.parse(localStorage.getItem("cart"));
+      const index = cartItems.findIndex(({ id }) => id === itemId);
+      cartItems.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cartItems));
+    },
+  },
+  mounted() {
+    this.loadCart();
   },
 };
 </script>

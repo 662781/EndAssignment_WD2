@@ -41,7 +41,7 @@
         </div>
 
         <div class="input-group mb-3">
-          <span class="input-group-text">Image Path</span>
+          <span class="input-group-text">Image Path/URL</span>
           <input
             type="text"
             class="form-control"
