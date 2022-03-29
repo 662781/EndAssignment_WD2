@@ -24,24 +24,24 @@ class ProductController extends Controller
         //     return;
         // }
 
-        $offset = NULL;
-        $limit = NULL;
+        // $offset = NULL;
+        // $limit = NULL;
 
-        if (isset($_GET["offset"]) && is_numeric($_GET["offset"])) {
-            $offset = $_GET["offset"];
-        }
-        if (isset($_GET["limit"]) && is_numeric($_GET["limit"])) {
-            $limit = $_GET["limit"];
-        }
+        // if (isset($_GET["offset"]) && is_numeric($_GET["offset"])) {
+        //     $offset = $_GET["offset"];
+        // }
+        // if (isset($_GET["limit"]) && is_numeric($_GET["limit"])) {
+        //     $limit = $_GET["limit"];
+        // }
 
-        $products = $this->service->getAll($offset, $limit);
+        $products = $this->service->getAll();
 
         $this->respond($products);
     }
 
     public function getOne($id)
     {
-        $product = $this->service->getOne($id);
+        $product = $this->service->getById($id);
 
         if (!$product) {
             $this->respondWithError(404, "Product not found");
@@ -55,8 +55,11 @@ class ProductController extends Controller
     {
         try {
             $product = $this->createObjectFromPostedJson("Models\\Product");
-            $product = $this->service->insert($product);
-
+            if ($this->service->getById($product->getId())) {
+                $this->respondWithError(401, "Product with this ID already exists!");
+                return;
+            }
+            $this->service->insert($product);
         } catch (Exception $e) {
             $this->respondWithError(500, $e->getMessage());
         }
@@ -64,12 +67,11 @@ class ProductController extends Controller
         $this->respond($product);
     }
 
-    public function update($id)
+    public function update()
     {
         try {
             $product = $this->createObjectFromPostedJson("Models\\Product");
-            $product = $this->service->update($product, $id);
-
+            $this->service->update($product);
         } catch (Exception $e) {
             $this->respondWithError(500, $e->getMessage());
         }
@@ -80,7 +82,7 @@ class ProductController extends Controller
     public function delete($id)
     {
         try {
-            $this->service->delete($id);
+            $this->service->deleteById($id);
         } catch (Exception $e) {
             $this->respondWithError(500, $e->getMessage());
         }

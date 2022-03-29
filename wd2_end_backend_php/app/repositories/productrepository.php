@@ -10,82 +10,28 @@ use Repositories\Repository;
 
 class ProductRepository extends Repository
 {
-    function getAll($offset = NULL, $limit = NULL)
+    function getAll()
     {
-        // try {
-        //     $query = "SELECT `id`, `name`, `category_id`, `price`, `ingredients`, `img_path` FROM `product`";
-        //     if (isset($limit) && isset($offset)) {
-        //         $query .= " LIMIT :limit OFFSET :offset ";
-        //     }
-        //     $stmt = $this->connection->prepare($query);
-        //     if (isset($limit) && isset($offset)) {
-        //         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-        //         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-        //     }
-        //     $stmt->execute();
-
-        //     $products = $stmt->fetchAll();
-
-        //     return $products;
-        // } catch (PDOException $e) {
-        //     echo $e;
-        // }
-
         try {
             $stmt = $this->connection->prepare("SELECT id, `name`, category_id, price, ingredients, img_path FROM product");
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Product');
             $products = $stmt->fetchAll();
             return $products;
-        } catch (PDOException $e)
-        {
+        } catch (PDOException $e) {
             echo $e;
         }
     }
 
-    // function getOne($id)
-    // {
-    //     try {
-    //         $query = "SELECT product.*, category.name as category_name FROM product INNER JOIN category ON product.category_id = category.id WHERE product.id = :id";
-    //         $stmt = $this->connection->prepare($query);
-    //         $stmt->bindParam(':id', $id);
-    //         $stmt->execute();
-
-    //         $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    //         $row = $stmt->fetch();
-    //         $product = $this->rowToProduct($row);
-
-    //         return $product;
-    //     } catch (PDOException $e) {
-    //         echo $e;
-    //     }
-    // }
-
-    // function rowToProduct($row) {
-    //     $product = new Product();
-    //     $product->id = $row['id'];
-    //     $product->name = $row['name'];
-    //     $product->price = $row['price'];
-    //     $product->description = $row['description'];
-    //     $product->image = $row['image'];
-    //     $product->category_id = $row['category_id'];
-    //     $category = new Category();
-    //     $category->id = $row['category_id'];
-    //     $category->name = $row['category_name'];
-
-    //     $product->category = $category;
-    //     return $product;
-    // }
-
-    function getOne($product_id){
+    function getById($product_id)
+    {
         try {
             $stmt = $this->connection->prepare("SELECT id, `name`, category_id, price, ingredients, img_path FROM product WHERE id = ?");
             $stmt->execute([$product_id]);
-            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Product');
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Product');
             $product = $stmt->fetch();
             return $product;
-        } catch (PDOException $e)
-        {
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -93,39 +39,34 @@ class ProductRepository extends Repository
     function insert($product)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT into product (name, price, description, image, category_id) VALUES (?,?,?,?,?)");
+            $stmt = $this->connection->prepare("INSERT INTO `product`(`name`, `category_id`, `price`, `ingredients`, `img_path`) VALUES (?,?,?,?,?)");
 
-            $stmt->execute([$product->name, $product->price, $product->description, $product->image, $product->category_id]);
+            $stmt->execute([$product->getName(), $product->getCatId(), $product->getPrice(), $product->getIngredients(), $product->getImgPath()]);
 
             $product->id = $this->connection->lastInsertId();
 
-            return $this->getOne($product->id);
         } catch (PDOException $e) {
             echo $e;
         }
     }
 
 
-    function update($product, $id)
+    function update($product)
     {
         try {
-            $stmt = $this->connection->prepare("UPDATE product SET name = ?, price = ?, description = ?, image = ?, category_id = ? WHERE id = ?");
+            $stmt = $this->connection->prepare("UPDATE `product` SET `name`= ? ,`category_id`= ? ,`price`= ? ,`ingredients`= ? ,`img_path`= ?  WHERE `id` = ?");
+            $stmt->execute([$product->getName(), $product->getCatId(), $product->getPrice(),$product->getIngredients(), $product->getImgPath(), $product->getId()]);
 
-            $stmt->execute([$product->name, $product->price, $product->description, $product->image, $product->category_id, $id]);
-
-            return $this->getOne($product->id);
         } catch (PDOException $e) {
             echo $e;
         }
     }
 
-    function delete($id)
+    function deleteById($id)
     {
         try {
-            $stmt = $this->connection->prepare("DELETE FROM product WHERE id = :id");
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            return;
+            $stmt = $this->connection->prepare("DELETE FROM `product` WHERE `id` = ?");
+            $stmt->execute([$id]);
         } catch (PDOException $e) {
             echo $e;
         }

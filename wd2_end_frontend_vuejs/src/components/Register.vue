@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import axios from "../axios-auth";
 export default {
   name: "Register",
   data() {
@@ -86,7 +87,19 @@ export default {
     };
   },
   methods: {
-    register() {},
+    register() {
+      axios
+        .post("/users/register", {
+          username: this.user.username,
+          password: this.user.password,
+          email: this.user.email
+        })
+        .then(res => {
+          console.log(res.data);
+          this.$router.push('/login')
+        })
+        .catch(error => console.log(error));
+    },
   },
 };
 </script>

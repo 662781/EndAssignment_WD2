@@ -2,7 +2,7 @@
   <section>
     <div class="container">
       <form ref="form">
-        <h2 class="mt-3 mt-lg-5">Create a product</h2>
+        <h2 class="mt-3 mt-lg-5">Create a new product</h2>
         <h5 class="mb-4"></h5>
 
         <div class="input-group mb-3">
@@ -12,38 +12,49 @@
 
         <div class="input-group mb-3">
           <span class="input-group-text">Price</span>
-          <input type="number" class="form-control" v-model="product.price" />
+          <input
+            type="number"
+            class="form-control"
+            v-model="product.price"
+            placeholder="0.00"
+          />
         </div>
 
         <div class="input-group mb-3">
-          <span class="input-group-text">Description</span>
+          <span class="input-group-text">Category ID</span>
+          <input
+            type="number"
+            class="form-control"
+            v-model="product.category_id"
+            placeholder="e.g. 1 (Pizza)"
+            min="1"
+            max="2"
+          />
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text">Ingredients</span>
           <textarea
             class="form-control"
-            v-model="product.description"
+            v-model="product.ingredients"
           ></textarea>
         </div>
 
         <div class="input-group mb-3">
-          <span class="input-group-text">Image URL</span>
-          <input type="text" class="form-control" v-model="product.image" />
-        </div>
-
-        <div class="input-group mb-3">
-          <span class="input-group-text">Category</span>
-          <select class="form-select" v-model="product.category_id">
-            <option
-              v-for="category in categories"
-              :key="category.id"
-              :category="category"
-              :value= category.id
-            >
-              {{category.name}}
-            </option>
-          </select>
+          <span class="input-group-text">Image Path</span>
+          <input
+            type="text"
+            class="form-control"
+            v-model="product.img_path"
+            placeholder="e.g. images/pizza-salame.png"
+          />
         </div>
 
         <div class="input-group mt-4">
-          <button type="button" class="btn btn-primary" @click="addProduct">Create product</button>
+          <button type="button" class="btn btn-primary" @click="addProduct">
+            Create product
+          </button>
+          &nbsp;
           <button
             type="button"
             class="btn btn-danger"
@@ -65,33 +76,25 @@ export default {
   data() {
     return {
       product: {
+        id: 0,
         name: "",
+        category_id: 1,
         price: "",
-        description: "",
-        image: "",
-        category_id: 0,
+        ingredients: "",
+        img_path: "",
       },
-      categories: [],
     };
   },
-  methods:{
+  methods: {
     addProduct() {
-      axios.post("/products", this.product)
-      .then(res => {
-        console.log(res.data);
-        this.$router.push('/products')
-      })
-      .catch((error) => console.log(error));
+      axios
+        .post("/products", this.product)
+        .then((res) => {
+          console.log(res.data);
+          this.$router.push("/products");
+        })
+        .catch((error) => console.log(error));
     },
-  },
-  mounted() {
-    axios
-      .get("/categories")
-      .then((res) => {
-        console.log(res);
-        this.categories = res.data;
-      })
-      .catch((error) => console.log(error));
   },
 };
 </script>

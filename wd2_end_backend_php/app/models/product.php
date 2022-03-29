@@ -7,12 +7,12 @@ use JsonSerializable;
 class Product implements JsonSerializable{
 
     //Fields
-    private int $id;
-    private string $name;
-    private int $category_id;
-    private float $price;
-    private string $ingredients;
-    private string $img_path;
+    public int $id;
+    public string $name;
+    public int $category_id;
+    public float $price;
+    public string $ingredients;
+    public string $img_path;
 
     //Gets all the properties (fields)
     public function jsonSerialize():mixed

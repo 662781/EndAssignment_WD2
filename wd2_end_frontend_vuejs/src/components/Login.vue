@@ -20,7 +20,7 @@
               type="username"
               class="form-control"
               id="username"
-              v-model="username"
+              v-model="this.username"
               placeholder="fluffyunicorn420"
             />
             <label for="username">Username</label>
@@ -30,7 +30,7 @@
               type="password"
               class="form-control"
               id="password"
-              v-model="password"
+              v-model="this.password"
               placeholder="Password"
             />
             <label for="password">Password</label>
@@ -64,7 +64,7 @@ export default {
     return {
       username: "",
       password: "",
-      errorMessage: null,
+      errorMessage: "",
     };
   },
   methods: {
@@ -75,7 +75,7 @@ export default {
           password: this.password,
         })
         .then(() => {
-          this.$router.push("/home");
+          this.$router.push("/");
         })
         .catch((error) => {
           this.errorMessage = error;

@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         try {
             $postedUser = $this->createObjectFromPostedJson("Models\\User");
-            $user = $this->service->checkUsernamePassword($postedUser->username, $postedUser->password);
+            $user = $this->service->checkUsernamePassword($postedUser->getUsername(), $postedUser->getPassword());
 
             if (!$user) {
                 $this->respondWithError(401, "Invalid Credentials");
@@ -37,19 +37,36 @@ class UserController extends Controller
                 "nbf" => time(),
                 "exp" => time() + 600,
                 "data" => array(
-                    "id" => $user->id,
-                    "username" => $user->username,
-                    "email" => $user->email
+                    "id" => $user->getId(),
+                    "username" => $user->getUsername(),
+                    "email" => $user->getEmail()
                 )
 
             );
 
             $jwt = JWT::encode($payload, $key, 'HS256');
 
-            $this->respond([ 
+            $this->respond([
                 "token" => $jwt,
-                "username" => $postedUser->username
+                "username" => $postedUser->getUsername()
             ]);
+        } catch (Exception $e) {
+            $this->respondWithError(500, $e->getMessage());
+        }
+    }
+
+    public function register()
+    {
+        try {
+            $postedUser = $this->createObjectFromPostedJson("Models\\User");
+            $user = $this->service->getByUsername($postedUser->getUsername());
+
+            if ($user) {
+                $this->respondWithError(401, "User already exists!");
+                return;
+            }
+
+            $this->service->insert($postedUser);
 
         } catch (Exception $e) {
             $this->respondWithError(500, $e->getMessage());

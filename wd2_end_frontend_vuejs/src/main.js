@@ -11,6 +11,7 @@ import Login from './components/Login.vue';
 import Register from './components/Register.vue';
 import Cart from './components/cart/Cart.vue';
 import Creator from './components/Creator.vue';
+import Profile from './components/Profile.vue';
 
 
 const routes = [
@@ -21,7 +22,8 @@ const routes = [
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/cart', component: Cart },
-    { path: '/creator', component: Creator }
+    { path: '/creator', component: Creator },
+    { path: '/profile', component: Profile }
 ];
 
 const router = createRouter({

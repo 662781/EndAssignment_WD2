@@ -1,76 +1,58 @@
 <template>
-  <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xxl-3 p-2">
-    <div class="card product-card h-100">
-      <div class="card-body">
-        <img :src="product.image" :alt="product.title" :title="product.title" />
-        <div class="float-start">
-          <p>{{ product.name }}</p>
-          <p>
-            <small>{{ product.category.name }}</small>
-          </p>
-        </div>
-        <span class="price float-end">{{ product.price }}</span>
-      </div>
-      <div class="card-footer">
-        <button
-          class="btn btn-warning"
-          @click="editProduct(product.id)"
-          v-if="this.$store.getters.isAuthenticated"
-        >
-          Edit</button
-        >&nbsp;&nbsp;
-        <button
-          class="btn btn-danger"
-          @click="deleteProduct(product.id)"
-          v-if="this.$store.getters.isAuthenticated"
-        >
-          Delete
-        </button>
-      </div>
-    </div>
-  </div> -->
   <div class="col">
     <div class="card shadow-sm">
-      <img :src="product.img_path" alt="ProductImg" class="product-page-image" />
+      <img
+        :src="product.img_path"
+        alt="ProductImg"
+        class="product-page-image"
+      />
       <div class="card-body">
-        <h3 class="product-header">{{this.product.name}}</h3>
-        <h4 class="product-price">€{{this.product.price}}</h4>
-        <p class="card-text">{{this.product.ingredients}}</p>
+        <h3 class="product-header">{{ this.product.name }}</h3>
+        <h4 class="product-price">€{{ this.product.price }}</h4>
+        <p class="card-text">{{ this.product.ingredients }}</p>
         <div class="d-flex justify-content-between align-items-center">
-          <div class="btn-group">
-            <button
-              type="submit"
-              name="add-item"
-              class="btn btn-sm btn-outline-primary"
+          <div class="row btn-group">
+            <div class="col">
+              <input
+                type="number"
+                class="product-amount"
+                name="amount"
+                value="1"
+                min="1"
+                max="10"
+                v-bind="this.amount"
+              />
+              <button
+                class="btn btn-sm btn-outline-primary"
+                @click="addToCart()"
+              >
+                Add to cart
+              </button>
+            </div>
+            <div class="col">
+              <div class="row-2">
+                <button
+                  class="btn btn-sm btn-warning"
+                  @click="editProduct(this.product.id)"
+                  v-if="this.$store.getters.isAuthenticated"
+                >
+                  Edit
+                </button>
+              </div>
+              <div class="row-2">
+                <button
+                  class="btn btn-sm btn-danger"
+                  @click="deleteProduct(this.product.id)"
+                  v-if="this.$store.getters.isAuthenticated && product.id > 7"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+            <small class="text-muted"
+              >Freshly made &amp; Delivered within 60 min.</small
             >
-              Add to cart
-            </button>
-            <button
-              class="btn btn-warning"
-              @click="editProduct(this.product.id)"
-              v-if="this.$store.getters.isAuthenticated"
-            >
-              Edit</button
-            >&nbsp;&nbsp;
-            <button
-              class="btn btn-danger"
-              @click="deleteProduct(this.product.id)"
-              v-if="this.$store.getters.isAuthenticated"
-            >
-              Delete
-            </button>
           </div>
-          <input
-            type="number"
-            class="product-amount"
-            name="amount"
-            value="1"
-            min="1"
-            max="10"
-          />
-          <small class="text-muted"
-            >Freshly made & Delivered within 60 min.</small
-          >
         </div>
       </div>
     </div>
@@ -82,6 +64,11 @@ import axios from "../../axios-auth";
 
 export default {
   name: "ProductListItem",
+  data() {
+    return {
+      amount: null,
+    };
+  },
   props: {
     product: Object,
   },
@@ -100,6 +87,7 @@ export default {
       //Use the router to navigate to the editproduct route and pass the id
       this.$router.push("/editproduct/" + id);
     },
+    addToCart() {},
   },
 };
 </script>

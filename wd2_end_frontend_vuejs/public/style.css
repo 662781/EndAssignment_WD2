@@ -113,6 +113,9 @@
     min-height: 300px;
 }
 
+.product-amount{
+  max-width: 25%;
+}
 
 
 /* Creator */
@@ -131,10 +134,6 @@
 
 .cart-item-img{
   max-width: 35%;
-}
-
-.product-amount{
-  max-width: 25%;
 }
 
 .ingredients{

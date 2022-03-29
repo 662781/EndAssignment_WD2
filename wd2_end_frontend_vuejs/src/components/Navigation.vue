@@ -69,7 +69,7 @@
           </li>
           <li class="nav-item" v-if="this.$store.getters.isAuthenticated">
             <router-link to="/profile" class="nav-link link-dark px-2"
-              ><img src="images/person-circle.svg" alt="profile" />
+              ><img src="images/person-circle.svg" alt="profile" /> {{this.$store.state.username}}
             </router-link>
           </li>
           <li class="nav-item">
@@ -78,14 +78,8 @@
             >
           </li>
           <li class="nav-item" v-if="this.$store.getters.isAuthenticated">
-            <!-- v-if="this.$store.getters.isAuthenticated" -->
-            <!-- Make and use a logout component! -->
-            <a
-              @click="this.$store.dispatch('logout')"
-              class="nav-link"
-              active-class="active"
-              >Logout</a
-            >
+            <logout>
+            </logout>
           </li>
         </ul>
       </div>
@@ -94,7 +88,9 @@
 </template>
 
 <script>
+import Logout from './Logout.vue';
 export default {
+  components: { Logout },
   name: "Navigation",
 };
 </script>

@@ -34,36 +34,36 @@ class Controller
 
         $object = new $className();
         foreach ($data as $key => $value) {
-            if(is_object($value)) {
+            if (is_object($value)) {
                 continue;
             }
             $object->{$key} = $value;
+
+            // $setter = "set" . ucfirst($key);
+            // $object->$setter($value);
         }
         return $object;
     }
 
-    function checkToken(){
-        if(!isset($_SERVER["HTTP_AUTHORIZATION"])){
-            $this->respondWithError(401, "Je hebt geen Token pik");
+    function checkToken()
+    {
+        if (!isset($_SERVER["HTTP_AUTHORIZATION"])) {
+            $this->respondWithError(401, "No token found");
             return false;
         }
 
-        try{
+        try {
             $header = $_SERVER["HTTP_AUTHORIZATION"];
             $array = explode(" ", $header);
-            $jwt = $array[1];   
-    
+            $jwt = $array[1];
+
             $key = "MustBeSecret";
-    
+
             $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
             return $decoded;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->respondWithError(401, $e->getMessage());
             return;
         }
-       
-
-
     }
 }

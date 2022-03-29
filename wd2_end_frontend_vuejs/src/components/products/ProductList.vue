@@ -1,47 +1,32 @@
 <template>
-  <!-- <div class="container">
-      <h2 class="mt-3 mt-lg-5">Products</h2>
-      <button
-        type="button"
-        class="btn btn-primary mt-3"
-        @click="this.$router.push('/createproduct')"
-        v-if="this.$store.getters.isAuthenticated"
-      >
-        Add product
-      </button>
-      <div class="row mt-3">
-        <product-list-item
-          v-for="product in products"
-          :key="product.id"
-          :product="product"
-          @update="loadProducts"
-          
-        />
-        @update="loadProducts" -->
-  <!-- </div>
-    </div> -->
   <div class="album py-5 bg-light">
     <div class="container">
-      <h1 class="product-type">Products</h1>
       <button
         type="button"
-        class="btn btn-primary mt-3"
+        class="btn btn-primary mt-3 mb-2"
         @click="this.$router.push('/createproduct')"
         v-if="this.$store.getters.isAuthenticated"
       >
         Add product
       </button>
+      <h1 class="product-type">Pizza</h1>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="pizzas">
         <product-list-item
-          v-for="product in products"
+          v-for="product in pizzas"
           :key="product.id"
           :product="product"
           @update="loadProducts"
         />
       </div>
-
-      <!-- <h1 class="product-type">Pasta</h1>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div> -->
+      <h1 class="product-type">Pasta</h1>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <product-list-item
+          v-for="product in pastas"
+          :key="product.id"
+          :product="product"
+          @update="loadProducts"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -58,6 +43,8 @@ export default {
   data() {
     return {
       products: [],
+      pizzas: [],
+      pastas: []
     };
   },
   mounted() {
@@ -70,9 +57,21 @@ export default {
         .then((res) => {
           console.log(res);
           this.products = res.data;
+          this.splitArray();
         })
         .catch((error) => console.log(error));
     },
+    splitArray(){
+      this.products.forEach(product => {
+        if(product.category_id == 1){
+          this.pastas.push(product);
+        }
+        
+        if(product.category_id == 2){
+          this.pizzas.push(product);
+        }
+      });
+    }
   },
 };
 </script>

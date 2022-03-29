@@ -8,7 +8,7 @@ ini_set("display_errors", 1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-//Create Router instance
+//Create a Router instance
 $router = new \Bramus\Router\Router();
 
 $router->setNamespace('Controllers');
@@ -17,11 +17,13 @@ $router->setNamespace('Controllers');
 $router->get('/products', 'ProductController@getAll');
 $router->get('/products/(\d+)', 'ProductController@getOne');
 $router->post('/products', 'ProductController@create');
-$router->put('/products/(\d+)', 'ProductController@update');
+$router->put('/products', 'ProductController@update');
 $router->delete('/products/(\d+)', 'ProductController@delete');
 
-//Routes for the userlogin endpoint
+//Routes for the login endpoint
 $router->post('/users/login', 'UserController@login');
 
-// Run it!
+//Routes for the register endpoint
+$router->post('/users/register', 'UserController@register');
+
 $router->run();

@@ -4,11 +4,11 @@ namespace Models;
 class User {
 
     //Fields
-    private int $id;
-    private string $username;
-    private string $email;
-    private string $password;
-    private string $created_at;
+    public int $id;
+    public string $username;
+    public string $email;
+    public string $password;
+    public string $created_at;
 
     //Getters
     public function getId(): int
@@ -53,8 +53,8 @@ class User {
 
     public function setPassword(string $password): self
     {
-        // $this->password = password_hash($password, PASSWORD_DEFAULT);
-        $this->password = $password;
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        // $this->password = $password;
 
         return $this;
     }
