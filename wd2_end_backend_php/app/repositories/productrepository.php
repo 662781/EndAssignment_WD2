@@ -2,7 +2,6 @@
 
 namespace Repositories;
 
-use Models\Category;
 use Models\Product;
 use PDO;
 use PDOException;

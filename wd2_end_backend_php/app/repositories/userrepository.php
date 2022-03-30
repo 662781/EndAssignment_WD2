@@ -54,6 +54,19 @@ class UserRepository extends Repository
         }
     }
 
+    function getById($id)
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT id, username, email, `password`, created_at FROM user WHERE id = ?");
+            $stmt->execute([$id]);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\User');
+            $user = $stmt->fetch();
+            return $user;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     function insert($user)
     {
         try {

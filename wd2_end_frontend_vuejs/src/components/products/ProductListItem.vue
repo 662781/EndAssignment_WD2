@@ -88,13 +88,13 @@ export default {
       this.$router.push("/editproduct/" + id);
     },
     addToCart() {
-      const item = this.product;
+      let product = this.product;
       if (!localStorage.getItem("cart")) {
         localStorage.setItem("cart", JSON.stringify([]));
       }
-      const cartItems = JSON.parse(localStorage.getItem("cart"));
-      cartItems.push(item);
-      localStorage.setItem("cart", JSON.stringify(cartItems));
+      let cart = JSON.parse(localStorage.getItem("cart"));
+      cart.push(product);
+      localStorage.setItem("cart", JSON.stringify(cart));
       this.$router.push("/cart");
     },
   },

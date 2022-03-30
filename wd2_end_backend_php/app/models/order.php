@@ -4,11 +4,11 @@ namespace Models;
 class Order{
 
     //Fields
-    private int $id;
-    private int $user_id;
-    private string $payment_method;
-    private float $total_price;
-    private string $date_time;
+    public int $id;
+    public int $user_id;
+    public string $payment_method;
+    public float $total_price;
+    public string $date_time;
 
     
     //Getters

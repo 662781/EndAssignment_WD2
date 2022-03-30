@@ -5,7 +5,8 @@ const store = createStore({
     state() {
         return {
             token: null,
-            username: null
+            username: null,
+            id: null
         }
     },
     getters: {
@@ -17,21 +18,25 @@ const store = createStore({
         loginSuccesful(state, parameters) {
             state.token = parameters.token;
             state.username = parameters.username;
+            state.id = parameters.id;
         },
         logout(state){
             state.token = null;
             state.username = null;
+            state.id = null;
         }
     },
     actions: {
         autoLogin({ commit }) {
             let token = localStorage.getItem('token');
             let username = localStorage.getItem('username');
+            let id = localStorage.getItem('id');
             if (token) {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + token;
                 commit('loginSuccesful', {
                     token: token,
-                    username: username
+                    username: username,
+                    id: id
                 });
             }
         },
@@ -44,6 +49,7 @@ const store = createStore({
             return new Promise((resolve, reject) => {
                 axios
                     .post("/users/login", {
+                        id: parameters.id,
                         username: parameters.username,
                         password: parameters.password
                     })
@@ -53,9 +59,11 @@ const store = createStore({
 
                         localStorage.setItem('token', res.data.token);
                         localStorage.setItem('username', res.data.username);
+                        localStorage.setItem('id', res.data.id);
                         commit('loginSuccesful', {
                             token: res.data.token,
-                            username: res.data.username
+                            username: res.data.username,
+                            id: res.data.id
                         });
                         resolve();
                     })

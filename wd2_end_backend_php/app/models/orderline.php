@@ -4,11 +4,11 @@ namespace Models;
 class OrderLine{
 
     //Fields
-    private int $id;
-    private int $order_id;
-    private int $product_id;
-    private int $amount;
-    private float $price; 
+    public int $id;
+    public int $order_id;
+    public int $product_id;
+    public int $amount;
+    public float $price; 
 
     
     //Getters

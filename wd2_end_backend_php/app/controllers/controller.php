@@ -5,6 +5,11 @@ namespace Controllers;
 use Exception;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Models\Order;
+use Models\OrderLine;
+use Models\Product;
+use Models\User;
+
 
 class Controller
 {

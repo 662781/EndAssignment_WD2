@@ -10,15 +10,16 @@
           <ul class="list-group mb-3" id="cart">
             <!-- Show CartItems -->
             <cart-item
-              v-for="item in cardItems"
-              :key="item.id"
-              :item="item"
-              @delete="removeFromCart()"
+              v-for="product in cart"
+              :key="product.id"
+              :product="product"
+              @delete="removeFromCart"
+              @passInfo="setOrderLineInfo"
             />
             <!-- Show if cart is empty -->
             <li
               class="list-group-item d-flex justify-content-between lh-sm"
-              v-if="!this.cartItems.length"
+              v-if="!this.cart.length"
             >
               <i> Your cart is empty </i>
             </li>
@@ -51,6 +52,7 @@
                     placeholder="Username"
                     required=""
                     name="cartUser"
+                    :value="this.currentUser.username"
                   />
                   <div class="invalid-feedback">Your username is required.</div>
                 </div>
@@ -64,6 +66,7 @@
                   id="email"
                   placeholder="you@example.com"
                   name="cartEmail"
+                  :value="this.currentUser.email"
                 />
                 <div class="invalid-feedback">
                   Please enter a valid email address for shipping updates.
@@ -113,6 +116,7 @@
                   checked=""
                   required=""
                   value="IDEAL"
+                  v-model="this.paymentMethod"
                 />
                 <label class="form-check-label" for="ideal">IDEAL</label>
               </div>
@@ -124,6 +128,7 @@
                   class="form-check-input"
                   required=""
                   value="PayPal"
+                  v-model="this.paymentMethod"
                 />
                 <label class="form-check-label" for="paypal">PayPal</label>
               </div>
@@ -135,6 +140,7 @@
                   class="form-check-input"
                   required=""
                   value="Monopoly Money"
+                  v-model="this.paymentMethod"
                 />
                 <label class="form-check-label" for="monopoly"
                   >Monopoly Money</label
@@ -147,6 +153,7 @@
             <button
               class="w-100 btn btn-primary btn-lg"
               type="button"
+              @click="pay()"
             >
               Commence Payment
             </button>
@@ -159,15 +166,20 @@
 
 <script>
 import CartItem from "./CartItem.vue";
+import axios from "../../axios-auth";
 
 export default {
   name: "Cart",
   data() {
     return {
-      cartItems: [],
+      cart: [],
       confirmMsg: "",
       errorMsg: "",
       totalPrice: 0,
+      currentUser: Object,
+      paymentMethod: "",
+      productId: 0,
+      price: 0,
     };
   },
   components: {
@@ -178,22 +190,69 @@ export default {
       if (!localStorage.getItem("cart")) {
         localStorage.setItem("cart", JSON.stringify([]));
       }
-      this.cartItems = JSON.parse(localStorage.getItem("cart"));
-      if (this.cartItems != null) {
-        this.cartItems.forEach((item) => {
-          this.totalPrice += item.price;
-        });
+      this.cart = JSON.parse(localStorage.getItem("cart"));
+      if (this.cart != null) {
+        this.calcTotal();
       }
     },
-    removeFromCart(itemId) {
-      const cartItems = JSON.parse(localStorage.getItem("cart"));
-      const index = cartItems.findIndex(({ id }) => id === itemId);
-      cartItems.splice(index, 1);
-      localStorage.setItem("cart", JSON.stringify(cartItems));
+    removeFromCart(productId) {
+      let cart = JSON.parse(localStorage.getItem("cart"));
+      const index = cart.findIndex(({ id }) => id === productId);
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      this.cart = JSON.parse(localStorage.getItem("cart"));
+      this.calcTotal();
+    },
+    calcTotal() {
+      this.cart.forEach((product) => {
+        this.totalPrice += product.price;
+      });
+    },
+    getUser() {
+      let id = this.$store.state.id;
+      if (!this.$store.getters.isAuthenticated) {
+        //Give the guest-id to load the guest user
+        id = 7;
+      }
+      axios
+        .get("/users/" + id)
+        .then((res) => {
+          this.currentUser = res.data;
+          console.log(res.data);
+        })
+        .catch((error) => console.log(error));
+    },
+    pay() {
+      axios
+        .post("/orders/create", {
+          user_id: this.currentUser.id,
+          payment_method: this.paymentMethod,
+          total_price: this.totalPrice,
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => console.log(error));
+
+      axios
+        .post("/orders/placeorder", {
+          product_id: this.productId,
+          price: this.price,
+        })
+        .then((res) => {
+          console.log(res.data);
+          this.confirmMsg = "Order received!";
+        })
+        .catch((error) => console.log(error));
+    },
+    setOrderLineInfo(id, price) {
+      this.productId = id;
+      this.price = price;
     },
   },
   mounted() {
     this.loadCart();
+    this.getUser();
   },
 };
 </script>

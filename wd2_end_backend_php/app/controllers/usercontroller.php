@@ -48,7 +48,8 @@ class UserController extends Controller
 
             $this->respond([
                 "token" => $jwt,
-                "username" => $postedUser->getUsername()
+                "username" => $postedUser->getUsername(),
+                "id" => $user->getId()
             ]);
         } catch (Exception $e) {
             $this->respondWithError(500, $e->getMessage());
@@ -71,5 +72,17 @@ class UserController extends Controller
         } catch (Exception $e) {
             $this->respondWithError(500, $e->getMessage());
         }
+    }
+
+    public function getOne($id)
+    {
+        $user = $this->service->getById($id);
+
+        if (!$user) {
+            $this->respondWithError(404, "User not found");
+            return;
+        }
+
+        $this->respond($user);
     }
 }

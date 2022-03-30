@@ -21,9 +21,14 @@ $router->put('/products', 'ProductController@update');
 $router->delete('/products/(\d+)', 'ProductController@delete');
 
 //Routes for the login endpoint
+$router->get('/users/(\d+)', 'UserController@getOne');
 $router->post('/users/login', 'UserController@login');
 
 //Routes for the register endpoint
 $router->post('/users/register', 'UserController@register');
+
+//Routes for the order endpoint
+$router->post('/orders/create', 'OrderController@createOrder');
+$router->post('/orders/placeorder', 'OrderController@placeOrder');
 
 $router->run();

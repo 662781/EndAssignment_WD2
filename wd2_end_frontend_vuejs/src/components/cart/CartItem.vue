@@ -1,20 +1,21 @@
 <template>
   <li class="list-group-item d-flex justify-content-between lh-sm">
-    <img src="" alt="" class="product-image" />
+    <img :src="product.img_path" alt="product" class="product-image" />
     <div>
-      <h6 class="my-0">{{item.name}}</h6>
+      <h6 class="my-0">{{ product.name }}</h6>
       <div class="ingredients">
-        <small class="text-muted"><i>{{item.ingredients}}</i></small>
+        <small class="text-muted"><i>{{ product.ingredients }}</i></small>
       </div>
     </div>
     <div>
-      <strong>€ {{item.price}}</strong>
+      <strong>€ {{product.price}}</strong>
+      &nbsp;
       <div class="btn-group">
         <input type="hidden" name="product-id" value="product-id" />
         <button
           type="button"
           class="btn btn-sm btn-danger btn-delete"
-          @click="delFromCart(item.id)"
+          @click="delFromCart(product.id)"
         >
           Delete
         </button>
@@ -27,12 +28,18 @@
 export default {
   name: "CartItem",
   props:{
-    item: Object
+    product: Object
   },
   methods: {
     delFromCart(id){
       this.$emit("delete", id)
+    },
+    passOrderLineInfo(){
+      this.$emit("passInfo", this.product.id, this.product.price)
     }
+  },
+  mounted(){
+    this.passOrderLineInfo();
   }
 };
 </script>
