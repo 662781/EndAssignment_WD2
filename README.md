@@ -39,4 +39,4 @@ Unfinished (due to lack of time):
 Explaination: I did this so you can't accidentally delete the main products
 
 NB
-- Link to hosted website: https://wd2-endassignment.herokuapp.com/
+- Webapp is not hosted, please test via Docker :)
