@@ -12,15 +12,18 @@ This assigment is based on my WD1 EndAssigment and made with VUE.js & PHP
 ### Feel free to register an account yourself!
 
 </br></br>
-## Functionalities
+## Functionalities 
 Finished:
 
 - Login & Register
-- Product Page with CRUD functionality
+- Product Page with CRUD functionalities
+- Shopping cart with add & delete item 
+- Account insight (all info readonly)
 
 </br>
 
 Unfinished (due to lack of time):
+- Orders being added to DB
 - Creating & ordering a custom pizza
 - Automatic email after succesful order
 - Account insight with order history & edit function

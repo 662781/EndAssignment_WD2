@@ -189,5 +189,3 @@ export default {
   name: "Creator",
 };
 </script>
-<style scoped>
-</style>

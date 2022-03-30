@@ -15,6 +15,7 @@
           v-for="product in pizzas"
           :key="product.id"
           :product="product"
+          @update="loadProducts"
         />
         <!-- @update="loadProducts" -->
       </div>
@@ -24,6 +25,7 @@
           v-for="product in pastas"
           :key="product.id"
           :product="product"
+          @update="loadProducts"
         />
       </div>
     </div>
@@ -56,6 +58,8 @@ export default {
         .then((res) => {
           console.log(res);
           this.products = res.data;
+          this.pizzas = [];
+          this.pastas = [];
           this.splitArray();
         })
         .catch((error) => console.log(error));
@@ -74,6 +78,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
