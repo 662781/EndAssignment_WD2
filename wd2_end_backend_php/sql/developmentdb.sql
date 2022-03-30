@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Gegenereerd op: 30 jan 2022 om 17:13
+-- Gegenereerd op: 30 mrt 2022 om 10:09
 -- Serverversie: 10.6.5-MariaDB-1:10.6.5+maria~focal
 -- PHP-versie: 7.4.25
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pizzatimedb`
+-- Database: `developmentdb`
 --
 
 -- --------------------------------------------------------
@@ -180,7 +180,8 @@ INSERT INTO `user` (`id`, `username`, `email`, `password`, `created_at`) VALUES
 (4, '', '', '$2y$10$TTPTH/gTsdFNZkAcOh3bLebV8xN8q.BfFtGQ3otLC2lNw7xTJLXmm', '2022-01-24 14:30:30'),
 (5, 'Lightning', '662781@student.inholland.nl', '$2y$10$GMFveaNxqFY82be5fNG3Ge0mtwGIyQrBcrgZzi8zx44tj1HY3N89.', '2022-01-24 14:35:19'),
 (6, 'KlaasdeTester4', 'klaasdetester4@jamail.nl', '$2y$10$YvTZrTyiENB0tji3Z01sLeK81xIJmdt/mgZEOR1qdItlh6J6NArRK', '2022-01-24 14:36:27'),
-(7, 'guest', '-', '-', '2022-01-28 08:18:27');
+(7, 'guest', '-', '-', '2022-01-28 08:18:27'),
+(8, 'Mark', 'Mark.deHaan@inholland.nl', '$2y$10$WpXyWwpFVXnu8oi2hd3YWuMhb.g7cPTzoRbtCmkx2g0MVLHiqlrxK', '2022-03-29 11:27:55');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -240,7 +241,7 @@ ALTER TABLE `order_line`
 -- AUTO_INCREMENT voor een tabel `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT voor een tabel `product_cat`
@@ -252,7 +253,7 @@ ALTER TABLE `product_cat`
 -- AUTO_INCREMENT voor een tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
